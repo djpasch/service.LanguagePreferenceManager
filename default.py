@@ -300,6 +300,19 @@ class LangPrefMan_Player(xbmc.Player) :
             self.selected_sub_enabled = json_response['result']['subtitleenabled']
             self.audiostreams = json_response['result']['audiostreams']
             self.subtitles = json_response['result']['subtitles']
+
+            log(LOG_DEBUG, 'Replace wrongfully returned values')
+            # log(LOG_DEBUG,simplejson.dumps(self.selected_audio_stream).replace("nl\u0000","dut"))
+            self.selected_audio_stream= simplejson.loads(simplejson.dumps(self.selected_audio_stream).replace("nl\u0000","dut"))
+            self.selected_audio_stream= simplejson.loads(simplejson.dumps(self.selected_audio_stream).replace("en\u0000","eng"))
+            self.selected_sub= simplejson.loads(simplejson.dumps(self.selected_sub).replace("nl\u0000","dut"))
+            self.selected_sub= simplejson.loads(simplejson.dumps(self.selected_sub).replace("en\u0000","eng"))
+            self.audiostreams= simplejson.loads(simplejson.dumps(self.audiostreams).replace("nl\u0000","dut"))
+            self.audiostreams= simplejson.loads(simplejson.dumps(self.audiostreams).replace("en\u0000","eng"))
+            self.subtitles= simplejson.loads(simplejson.dumps(self.subtitles).replace("nl\u0000","dut"))
+            self.subtitles= simplejson.loads(simplejson.dumps(self.subtitles).replace("en\u0000","eng"))
+            log(LOG_DEBUG, 'Replacing values finished')
+
         log(LOG_DEBUG, json_response )
         genre_tags_query_dict = {"jsonrpc": "2.0",
                                  "method": "Player.GetItem",
